@@ -51,6 +51,35 @@ npm install
 npm run dev
 ```
 
+### 4. Create Admin User (for testing)
+```bash
+cd backend
+npm run create-admin
+```
+
+This creates an admin account with:
+- **Email:** `admin@visitvagad.com`
+- **Password:** `admin123`
+
+## 🔐 Admin Access
+
+### Login as Admin
+1. Go to http://localhost:3000/auth/login
+2. Enter admin credentials:
+   - Email: `admin@visitvagad.com`
+   - Password: `admin123`
+3. After login, navigate to http://localhost:3000/admin
+
+### Admin Dashboard Features
+Access complete control over:
+- **📋 Bookings** - View and manage all stay bookings
+- **📦 Orders** - Track all product orders
+- **🏠 Stays** - Add, edit, or delete homestays
+- **🛍️ Products** - Manage tribal craft products
+- **👥 Users** - View all registered users and their roles
+
+**⚠️ Note:** Change admin password immediately before deploying to production!
+
 ## 🧹 Project Structure
 
 ```text

@@ -3,10 +3,14 @@ import connectDB from '@/lib/mongodb';
 import Booking from '@/models/Booking';
 import { ApiResponse, IBooking } from '@/types';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
-    const booking = await Booking.findById(params.id);
+    const { id } = await params;
+    const booking = await Booking.findById(id);
     if (!booking) {
       return NextResponse.json({ success: false, error: 'Booking not found' } as ApiResponse<null>, { status: 404 });
     }
@@ -16,11 +20,15 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
+    const { id } = await params;
     const data = await request.json();
-    const booking = await Booking.findByIdAndUpdate(params.id, data, { new: true, runValidators: true });
+    const booking = await Booking.findByIdAndUpdate(id, data, { new: true, runValidators: true });
     if (!booking) {
       return NextResponse.json({ success: false, error: 'Booking not found' } as ApiResponse<null>, { status: 404 });
     }
@@ -30,10 +38,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
-    const booking = await Booking.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const booking = await Booking.findByIdAndDelete(id);
     if (!booking) {
       return NextResponse.json({ success: false, error: 'Booking not found' } as ApiResponse<null>, { status: 404 });
     }

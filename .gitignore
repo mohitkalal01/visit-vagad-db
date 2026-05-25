@@ -1,28 +1,89 @@
-# Dependencies
+# ===== Dependencies =====
 **/node_modules
 **/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
 
-# Next.js build
+# ===== Build & Output =====
 **/.next
 **/out
+**/dist
+**/build
+**/.turbo
 
-# Local Environment Variables
+# ===== Environment Variables (NEVER commit secrets) =====
+**/.env
 **/.env.local
+**/.env.*.local
 **/.env.development.local
 **/.env.test.local
 **/.env.production.local
+**/.env.production
 
-# Debug and Logs
+# ===== Logs =====
 **/npm-debug.log*
 **/yarn-debug.log*
 **/yarn-error.log*
 **/.pnpm-debug.log*
+**/lerna-debug.log*
 
-# IDE / Editor
+# ===== IDE / Editor =====
 **/.vscode
 **/.idea
+**/.vscode-test
 **/.DS_Store
+**/Thumbs.db
+**/*.swp
+**/*.swo
+**/*~
+**/.project
+**/.classpath
+**/.c9/
+**/*.launch
+**/.settings/
+**/*.sublime-workspace
 
-# Scratch/Temporary Files
+# ===== Testing & Coverage =====
+**/coverage
+**/.nyc_output
+**/jest-coverage
+
+# ===== Temporary & Cache Files =====
 **/scratch/
 **/*.tmp
+**/temp/
+**/.cache/
+**/.eslintcache
+**/.next/cache/
+
+# ===== Database & Local Data =====
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/data/
+**/uploads/
+
+# ===== OS Files =====
+.DS_Store
+Thumbs.db
+**/.gitkeep
+
+# ===== Credentials & Secrets =====
+**/secrets.json
+**/credentials.json
+**/api-keys.txt
+
+# ===== Production & Deployment =====
+.vercel
+**/.vercelignore
+
+# ===== Documentation Files (Local Setup Only) =====
+QUICK_ADMIN_LOGIN.md
+ADMIN_LOGIN_GUIDE.md
+ADMIN_SETUP_STATUS.md
+VERCEL_DEPLOYMENT_GUIDE.md
+PRODUCTION_CONFIG_SUMMARY.md
+SYSTEM_VERIFICATION_REPORT.md
+DEPLOYMENT_CHECKLIST.md
+GIT_PUSH_GUIDE.md
+GIT_PUSH_GUIDE.md

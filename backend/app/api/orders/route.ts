@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Order from '@/models/Order';
 import { ApiResponse } from '@/types';
+import { getCurrentUser } from '@/controllers/authController';
 
 export async function GET(request: Request) {
   try {
@@ -22,9 +23,18 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Authentication required' }, { status: 401 });
+    }
+
     await connectDB();
     const data = await request.json();
     
+    // Security: Override body user_id with session user_id
+    data.user_id = user.id;
+    data.user_name = user.name;
+
     // Auto calculate total_price
     data.total_price = (data.price || 0) * (data.quantity || 1);
     data.status = 'pending';

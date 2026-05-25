@@ -35,7 +35,9 @@ export default function ProductDetailPage() {
     const fetchReviews = async () => {
         try {
             const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-            const res = await fetch(`${baseUrl}/reviews?reference_id=${id}&type=product`);
+            const res = await fetch(`${baseUrl}/reviews?reference_id=${id}&type=product`, {
+                credentials: 'include'
+            });
             const data = await res.json();
             if (data.success) setReviews(data.data);
         } catch (err) {
@@ -49,16 +51,18 @@ export default function ProductDetailPage() {
             return;
         }
 
+        if (!product) return;
+
         try {
             const baseUrl = process.env.NEXT_PUBLIC_API_URL;
             setOrderLoading(true);
             const res = await fetch(`${baseUrl}/orders`, {
                 method: 'POST',
-                credentials: 'include'
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    user_id: user.id || (user as any)._id,
-                    product_id: (product as any)._id || product.$id,
+                    user_id: user.id,
+                    product_id: product._id,
                     product_name: product.name,
                     artisan_name: product.artisan_name,
                     price: product.price,
@@ -89,10 +93,10 @@ export default function ProductDetailPage() {
             setReviewLoading(true);
             const res = await fetch(`${baseUrl}/reviews`, {
                 method: 'POST',
-                credentials: 'include'
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    user_id: user.id || (user as any)._id,
+                    user_id: user.id,
                     user_name: user.name,
                     reference_id: id,
                     type: 'product',
@@ -118,7 +122,9 @@ export default function ProductDetailPage() {
             try {
                 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
                 setLoading(true);
-                const res = await fetch(`${baseUrl}/products/${id}`);
+                const res = await fetch(`${baseUrl}/products/${id}`, {
+                    credentials: 'include'
+                });
                 const data = await res.json();
                 if (data.success) {
                     setProduct(data.data);

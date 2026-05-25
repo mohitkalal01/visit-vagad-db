@@ -70,8 +70,9 @@ function PlannerContent() {
                     days: form.duration,
                     trip_type: form.trip_type,
                     interests: form.interests,
-                    user_id: user?.id || (user as any)?._id
+                    user_id: user?.id
                 }),
+                credentials: 'include'
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error ?? 'Unknown error');

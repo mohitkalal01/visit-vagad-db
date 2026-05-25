@@ -3,49 +3,61 @@ import type { NextRequest } from 'next/server';
 import * as jose from 'jose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'visit_vagad_secret_key_2024';
+const FRONTEND_URL = 'http://localhost:3000';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': FRONTEND_URL,
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+  'Access-Control-Allow-Credentials': 'true',
+};
 
 export async function proxy(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
-    // 1. Define routes that NEED authentication
-    const protectedRoutes = ['/api/admin', '/api/profile', '/api/bookings', '/api/orders'];
-    const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+  // Handle preflight requests
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, {
+      status: 204,
+      headers: corsHeaders,
+    });
+  }
 
-    if (isProtectedRoute) {
-        // 2. Get token from cookies
-        const token = request.cookies.get('auth_token')?.value;
+  // 1. Define routes that NEED authentication
+  const protectedRoutes = ['/api/admin', '/api/profile', '/api/bookings', '/api/orders'];
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
 
-        if (!token) {
-            return NextResponse.json(
-                { success: false, error: 'Please login to access this resource' },
-                { status: 401 }
-            );
-        }
+  if (isProtectedRoute) {
+    const token = request.cookies.get('auth_token')?.value;
 
-        try {
-            // 3. Verify JWT using 'jose' (works in Edge Runtime)
-            const secret = new TextEncoder().encode(JWT_SECRET);
-            await jose.jwtVerify(token, secret);
-            
-            // Authorized - continue to the route
-            return NextResponse.next();
-        } catch (error) {
-            return NextResponse.json(
-                { success: false, error: 'Session expired. Please login again.' },
-                { status: 401 }
-            );
-        }
+    if (!token) {
+      return NextResponse.json(
+        { success: false, error: 'Please login to access this resource' },
+        { status: 401, headers: corsHeaders }
+      );
     }
 
-    return NextResponse.next();
+    try {
+      const secret = new TextEncoder().encode(JWT_SECRET);
+      await jose.jwtVerify(token, secret);
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, error: 'Session expired. Please login again.' },
+        { status: 401, headers: corsHeaders }
+      );
+    }
+  }
+
+  const response = NextResponse.next();
+  
+  // Add CORS headers to the successful response
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
+
+  return response;
 }
 
-// 4. Configure which paths this middleware should run on
 export const config = {
-    matcher: [
-        '/api/admin/:path*',
-        '/api/profile/:path*',
-        '/api/bookings/:path*',
-        '/api/orders/:path*',
-    ],
+  matcher: '/api/:path*',
 };

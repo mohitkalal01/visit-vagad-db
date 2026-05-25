@@ -24,7 +24,9 @@ function SearchResultsContent() {
             setLoading(true);
             try {
                 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-                const res = await fetch(`${baseUrl}/search?q=${encodeURIComponent(query)}`);
+                const res = await fetch(`${baseUrl}/search?q=${encodeURIComponent(query)}`, {
+                    credentials: 'include'
+                });
                 const data = await res.json();
                 if (data.success) {
                     setResults(data.data);

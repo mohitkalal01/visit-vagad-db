@@ -20,10 +20,10 @@ export default function Home() {
         setLoading(true);
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         const [productsRes, staysRes, destRes, revRes] = await Promise.all([
-          fetch(`${baseUrl}/products`).then(res => res.json()),
-          fetch(`${baseUrl}/stays`).then(res => res.json()),
-          fetch(`${baseUrl}/destinations`).then(res => res.json()),
-          fetch(`${baseUrl}/reviews`).then(res => res.json())
+          fetch(`${baseUrl}/products`, { credentials: 'include' }).then(res => res.json()),
+          fetch(`${baseUrl}/stays`, { credentials: 'include' }).then(res => res.json()),
+          fetch(`${baseUrl}/destinations`, { credentials: 'include' }).then(res => res.json()),
+          fetch(`${baseUrl}/reviews`, { credentials: 'include' }).then(res => res.json())
         ]);
         
         if (productsRes.success) setProducts(productsRes.data.slice(0, 4));
@@ -124,7 +124,7 @@ export default function Home() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
-            {products.map(p => <ProductCard key={p.$id} product={p} />)}
+            {products.map(p => <ProductCard key={p._id} product={p} />)}
           </div>
         </div>
       </section>
@@ -144,7 +144,7 @@ export default function Home() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            {stays.map(s => <StayCard key={s.$id} stay={s} />)}
+            {stays.map(s => <StayCard key={s._id} stay={s} />)}
           </div>
         </div>
       </section>

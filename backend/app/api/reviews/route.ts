@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getReviews, createReview } from '@/controllers/reviewController';
+import { getCurrentUser } from '@/controllers/authController';
 
 export async function GET(request: Request) {
   try {
@@ -13,7 +14,17 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Authentication required' }, { status: 401 });
+    }
+
     const body = await request.json();
+    
+    // Security: Ensure user_id matches session
+    body.user_id = user.id;
+    body.user_name = user.name;
+
     const review = await createReview(body);
     return NextResponse.json({ success: true, data: review }, { status: 201 });
   } catch (error: any) {

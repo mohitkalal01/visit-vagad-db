@@ -24,7 +24,9 @@ export default function BazaarPage() {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+                    credentials: 'include'
+                });
                 const data = await res.json();
                 if (data.success) {
                     setProducts(data.data);
@@ -114,7 +116,7 @@ export default function BazaarPage() {
                     </div>
                 ) : (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
-                        {filtered.map(p => <ProductCard key={p.$id} product={p} />)}
+                        {filtered.map(p => <ProductCard key={p._id} product={p} />)}
                     </div>
                 )}
 

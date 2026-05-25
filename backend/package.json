@@ -27,6 +27,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "seed": "ts-node --compilerOptions \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/seed.ts"
+    "seed": "ts-node --compilerOptions \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/seed.ts",
+    "create-admin": "ts-node --compilerOptions \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/create-admin.ts"
   }
 }

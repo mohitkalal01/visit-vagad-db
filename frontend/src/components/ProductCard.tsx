@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Badge from './Badge';
 
 export interface Product {
-    $id: string;
+    _id: string;
     name: string;
     category: string;
     price: number;
@@ -36,10 +36,10 @@ interface Props {
 export default function ProductCard({ product }: Props) {
     const emoji = categoryEmoji[product.category] ?? '🛍️';
     const label = categoryLabel[product.category] ?? product.category;
-    const img = product.images?.[0] ?? `https://picsum.photos/seed/${product.$id}/400/300`;
+    const img = product.images?.[0] ?? `https://picsum.photos/seed/${product._id}/400/300`;
 
     return (
-        <Link href={`/bazaar/${product.$id}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/bazaar/${product._id}`} style={{ textDecoration: 'none' }}>
             <div className="card" style={{ cursor: 'pointer' }}>
                 {/* Image */}
                 <div style={{ position: 'relative', height: 200, overflow: 'hidden' }}>

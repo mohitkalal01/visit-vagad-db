@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAllBookings, createBooking } from '@/controllers/bookingController';
+import { getCurrentUser } from '@/controllers/authController';
 
 export async function GET(request: Request) {
   try {
@@ -13,7 +14,16 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'Authentication required' }, { status: 401 });
+    }
+
     const data = await request.json();
+    // Security: Ensure user_id matches the authenticated user
+    data.user_id = user.id;
+    data.user_name = user.name;
+
     const booking = await createBooking(data);
     return NextResponse.json({ success: true, data: booking }, { status: 201 });
   } catch (error: any) {

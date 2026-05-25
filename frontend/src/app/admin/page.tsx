@@ -21,7 +21,9 @@ export default function AdminDashboard() {
     const fetchData = async (tab: string) => {
         setLoading(true);
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/${tab}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/${tab}`, {
+                credentials: 'include'
+            });
             const json = await res.json();
             if (json.success) setData(json.data);
         } catch (err) {

@@ -22,7 +22,9 @@ export default function StaysPage() {
     const fetchStays = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stays`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stays`, {
+            credentials: 'include'
+        });
         const data = await res.json();
         if (data.success) {
           setStays(data.data);
@@ -98,7 +100,7 @@ export default function StaysPage() {
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            {filtered.map(s => <StayCard key={s.$id} stay={s} />)}
+            {filtered.map(s => <StayCard key={s._id} stay={s} />)}
           </div>
         )}
 

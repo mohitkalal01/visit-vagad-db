@@ -14,7 +14,9 @@ export default function DestinationsPage() {
     const [destinations, setDestinations] = useState<any[]>([]);
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations`, {
+            credentials: 'include'
+        })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {

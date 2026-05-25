@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Badge from './Badge';
 
 export interface Stay {
-    $id: string;
+    _id: string;
     name: string;
     location: string;
     district?: string;
@@ -28,11 +28,11 @@ interface Props {
 }
 
 export default function StayCard({ stay }: Props) {
-    const img = stay.images?.[0] ?? `https://picsum.photos/seed/stay-${stay.$id}/400/300`;
+    const img = stay.images?.[0] ?? `https://picsum.photos/seed/stay-${stay._id}/400/300`;
     const typeStr = stay.type ? (typeLabel[stay.type] ?? stay.type) : '🏡 Homestay';
 
     return (
-        <Link href={`/stays/${stay.$id}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/stays/${stay._id}`} style={{ textDecoration: 'none' }}>
             <div className="card" style={{ cursor: 'pointer' }}>
                 {/* Image */}
                 <div style={{ position: 'relative', height: 210, overflow: 'hidden' }}>

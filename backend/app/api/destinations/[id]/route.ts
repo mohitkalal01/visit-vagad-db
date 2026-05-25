@@ -3,10 +3,14 @@ import connectDB from '@/lib/mongodb';
 import Destination from '@/models/Destination';
 import { ApiResponse, IDestination } from '@/types';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
-    const destination = await Destination.findById(params.id);
+    const { id } = await params;
+    const destination = await Destination.findById(id);
     if (!destination) {
       return NextResponse.json({ success: false, error: 'Destination not found' } as ApiResponse<null>, { status: 404 });
     }
@@ -16,11 +20,15 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
+    const { id } = await params;
     const data = await request.json();
-    const destination = await Destination.findByIdAndUpdate(params.id, data, { new: true, runValidators: true });
+    const destination = await Destination.findByIdAndUpdate(id, data, { new: true, runValidators: true });
     if (!destination) {
       return NextResponse.json({ success: false, error: 'Destination not found' } as ApiResponse<null>, { status: 404 });
     }
@@ -30,10 +38,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
-    const destination = await Destination.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const destination = await Destination.findByIdAndDelete(id);
     if (!destination) {
       return NextResponse.json({ success: false, error: 'Destination not found' } as ApiResponse<null>, { status: 404 });
     }

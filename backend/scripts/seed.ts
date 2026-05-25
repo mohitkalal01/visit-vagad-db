@@ -11,9 +11,6 @@ dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 import Product from '../models/Product';
 import Stay from '../models/Stay';
 import Destination from '../models/Destination';
-import Experience from '../models/Experience';
-import Artisan from '../models/Artisan';
-import ParyatanMitra from '../models/ParyatanMitra';
 import Review from '../models/Review';
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
@@ -160,9 +157,6 @@ async function seed() {
     await Product.deleteMany();
     await Stay.deleteMany();
     await Destination.deleteMany();
-    await Experience.deleteMany();
-    await Artisan.deleteMany();
-    await ParyatanMitra.deleteMany();
     await Review.deleteMany();
 
     // Insert new data
@@ -174,15 +168,6 @@ async function seed() {
 
     const destinations = await Destination.insertMany(destinationsData);
     console.log(`✅ ${destinations.length} Destinations added`);
-
-    const experiences = await Experience.insertMany(experiencesData);
-    console.log(`✅ ${experiences.length} Experiences added`);
-
-    const artisans = await Artisan.insertMany(artisansData);
-    console.log(`✅ ${artisans.length} Artisans added`);
-
-    const paryatanMitras = await ParyatanMitra.insertMany(paryatanMitrasData);
-    console.log(`✅ ${paryatanMitras.length} Paryatan Mitras added`);
 
     const reviews = await Review.insertMany(reviewsData);
     console.log(`✅ ${reviews.length} Reviews added`);

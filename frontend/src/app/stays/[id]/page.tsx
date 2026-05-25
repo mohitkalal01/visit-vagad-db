@@ -39,7 +39,9 @@ export default function StayDetailPage() {
   const fetchReviews = async () => {
     try {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${baseUrl}/reviews?reference_id=${id}&type=stay`);
+      const res = await fetch(`${baseUrl}/reviews?reference_id=${id}&type=stay`, {
+        credentials: 'include'
+      });
       const data = await res.json();
       if (data.success) setReviews(data.data);
     } catch (err) {
@@ -51,7 +53,9 @@ export default function StayDetailPage() {
     const fetchStay = async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-        const res = await fetch(`${baseUrl}/stays/${id}`);
+        const res = await fetch(`${baseUrl}/stays/${id}`, {
+          credentials: 'include'
+        });
         const data = await res.json();
         if (data.success) {
           setStay(data.data);
@@ -81,9 +85,10 @@ export default function StayDetailPage() {
         setReviewLoading(true);
         const res = await fetch(`${baseUrl}/reviews`, {
             method: 'POST',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                user_id: user.id || (user as any)._id,
+                user_id: user.id,
                 user_name: user.name,
                 reference_id: id,
                 type: 'stay',
@@ -117,6 +122,9 @@ export default function StayDetailPage() {
       router.push('/auth/login');
       return;
     }
+
+    if (!stay) return;
+
     if (!form.checkIn || !form.checkOut) {
       alert('Please select check-in and check-out dates');
       return;
@@ -127,10 +135,11 @@ export default function StayDetailPage() {
       setBookingLoading(true);
       const res = await fetch(`${baseUrl}/bookings`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: user.id || (user as any)._id,
-          stay_id: (stay as any)._id || stay.$id,
+          user_id: user.id,
+          stay_id: stay._id,
           stay_name: stay.name,
           host_name: stay.host_name || 'Host',
           check_in: form.checkIn,

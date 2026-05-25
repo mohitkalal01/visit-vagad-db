@@ -1,0 +1,58 @@
+# Backend-specific .gitignore
+
+# ===== Dependencies =====
+/node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ===== Build & Output =====
+/.next
+/out
+/dist
+/.turbo
+
+# ===== Environment Variables (NEVER commit) =====
+.env
+.env.local
+.env.*.local
+.env.production
+
+# ===== Logs =====
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# ===== IDE / Editor =====
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ===== Database & Local Data =====
+*.db
+*.sqlite
+*.sqlite3
+/data
+/uploads
+
+# ===== Scripts & Temp =====
+/scripts/**/*.js
+.pem
+
+# ===== Testing =====
+/coverage
+.nyc_output
+
+# ===== Documentation Files (Local Setup Only) =====
+../QUICK_ADMIN_LOGIN.md
+../ADMIN_LOGIN_GUIDE.md
+../ADMIN_SETUP_STATUS.md
+../VERCEL_DEPLOYMENT_GUIDE.md
+../PRODUCTION_CONFIG_SUMMARY.md
+../SYSTEM_VERIFICATION_REPORT.md
+../DEPLOYMENT_CHECKLIST.md

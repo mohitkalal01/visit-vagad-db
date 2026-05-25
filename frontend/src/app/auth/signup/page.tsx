@@ -3,12 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SignUpPage() {
     const [form, setForm] = useState({ name: '', email: '', password: '' });
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
+    const router = useRouter();
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,10 +22,13 @@ export default function SignUpPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form),
+                credentials: 'include'
             });
             const data = await res.json();
             if (data.success) {
-                setSuccess(true);
+                login(data.user);
+                router.push('/');
+                router.refresh();
             } else {
                 setError(data.error || 'Signup failed');
             }
@@ -49,43 +55,34 @@ export default function SignUpPage() {
                 </div>
 
                 <div style={{ background: 'white', borderRadius: '1.5rem', padding: '2rem', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', border: '1px solid var(--border)' }}>
-                    {success ? (
-                        <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎉</div>
-                            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, color: 'var(--primary)', marginBottom: '0.5rem' }}>Welcome to VisitVagad!</h2>
-                            <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Your account has been created successfully.</p>
-                            <Link href="/" className="btn-primary" style={{ display: 'inline-flex', justifyContent: 'center', width: '100%' }}>Explore Vagad →</Link>
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            {[
-                                { id: 'name', label: 'Full Name', type: 'text', placeholder: 'Priya Sharma', key: 'name' },
-                                { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com', key: 'email' },
-                                { id: 'password', label: 'Password', type: 'password', placeholder: '••••••••', key: 'password' },
-                            ].map(field => (
-                                <div key={field.id}>
-                                    <label htmlFor={field.id} style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--primary)', fontFamily: 'Outfit, sans-serif', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{field.label}</label>
-                                    <input
-                                        id={field.id}
-                                        type={field.type}
-                                        placeholder={field.placeholder}
-                                        required
-                                        value={form[field.key as keyof typeof form]}
-                                        onChange={e => setForm(f => ({ ...f, [field.key]: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid var(--border)', borderRadius: '0.75rem', fontSize: '0.95rem', fontFamily: 'Inter, sans-serif', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                                        onFocus={e => (e.target.style.borderColor = 'var(--primary)')}
-                                        onBlur={e => (e.target.style.borderColor = 'var(--border)')}
-                                    />
-                                </div>
-                            ))}
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {[
+                            { id: 'name', label: 'Full Name', type: 'text', placeholder: 'Priya Sharma', key: 'name' },
+                            { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com', key: 'email' },
+                            { id: 'password', label: 'Password', type: 'password', placeholder: '••••••••', key: 'password' },
+                        ].map(field => (
+                            <div key={field.id}>
+                                <label htmlFor={field.id} style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--primary)', fontFamily: 'Outfit, sans-serif', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{field.label}</label>
+                                <input
+                                    id={field.id}
+                                    type={field.type}
+                                    placeholder={field.placeholder}
+                                    required
+                                    value={form[field.key as keyof typeof form]}
+                                    onChange={e => setForm(f => ({ ...f, [field.key]: e.target.value }))}
+                                    style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid var(--border)', borderRadius: '0.75rem', fontSize: '0.95rem', fontFamily: 'Inter, sans-serif', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
+                                    onFocus={e => (e.target.style.borderColor = 'var(--primary)')}
+                                    onBlur={e => (e.target.style.borderColor = 'var(--border)')}
+                                />
+                            </div>
+                        ))}
 
-                            {error && <p style={{ color: '#dc2626', fontSize: '0.88rem', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '0.5rem', padding: '0.6rem 0.9rem' }}>{error}</p>}
+                        {error && <p style={{ color: '#dc2626', fontSize: '0.88rem', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '0.5rem', padding: '0.6rem 0.9rem' }}>{error}</p>}
 
-                            <button type="submit" className="btn-primary" disabled={loading} style={{ justifyContent: 'center', marginTop: '0.5rem', opacity: loading ? 0.7 : 1 }}>
-                                {loading ? 'Creating Account...' : 'Create Account'}
-                            </button>
-                        </form>
-                    )}
+                        <button type="submit" className="btn-primary" disabled={loading} style={{ justifyContent: 'center', marginTop: '0.5rem', opacity: loading ? 0.7 : 1 }}>
+                            {loading ? 'Creating Account...' : 'Create Account'}
+                        </button>
+                    </form>
                 </div>
 
                 <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
