@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import * as jose from 'jose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'visit_vagad_secret_key_2024';
-const FRONTEND_URL = 'http://localhost:3000';
+const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': FRONTEND_URL,
