@@ -46,9 +46,15 @@ function getCorsHeaders(request: NextRequest) {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const corsHeaders = getCorsHeaders(request);
+  const method = request.method;
+  const origin = request.headers.get('origin') || '';
+
+  console.log(`[CORS/Middleware] Request: ${method} ${pathname} | Origin: "${origin}"`);
+  console.log(`[CORS/Middleware] Set Access-Control-Allow-Origin: "${corsHeaders['Access-Control-Allow-Origin']}"`);
 
   // Handle preflight OPTIONS requests
-  if (request.method === 'OPTIONS') {
+  if (method === 'OPTIONS') {
+    console.log(`[CORS/Middleware OPTIONS] Returning 204 for preflight OPTIONS`);
     return new NextResponse(null, {
       status: 204,
       headers: corsHeaders,
@@ -63,6 +69,7 @@ export async function proxy(request: NextRequest) {
     const token = request.cookies.get('auth_token')?.value;
 
     if (!token) {
+      console.log(`[CORS/Middleware Auth] Access Denied: No auth_token cookie for route: ${pathname}`);
       return NextResponse.json(
         { success: false, error: 'Please login to access this resource' },
         { status: 401, headers: corsHeaders }
@@ -72,7 +79,9 @@ export async function proxy(request: NextRequest) {
     try {
       const secret = new TextEncoder().encode(JWT_SECRET);
       await jose.jwtVerify(token, secret);
+      console.log(`[CORS/Middleware Auth] Access Granted: auth_token verified for route: ${pathname}`);
     } catch (error) {
+      console.log(`[CORS/Middleware Auth] Access Denied: Session expired/invalid token for route: ${pathname}`);
       return NextResponse.json(
         { success: false, error: 'Session expired. Please login again.' },
         { status: 401, headers: corsHeaders }
