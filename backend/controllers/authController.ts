@@ -49,7 +49,13 @@ export const login = async (data: any) => {
 
 export const logout = async () => {
   const cookieStore = await cookies();
-  cookieStore.set('auth_token', '', { maxAge: 0 });
+  cookieStore.set('auth_token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 0,
+    path: '/',
+  });
 };
 
 export const getCurrentUser = async () => {
