@@ -92,7 +92,7 @@ visit-vagad-fronend/
 │   ├── controllers/      # Business logic (Express style)
 │   ├── models/           # Mongoose schemas
 │   ├── app/api/          # API route definitions
-│   └── proxy.ts          # Modern Auth Middleware
+│   └── middleware.ts     # Modern Auth Middleware
 └── .gitignore            # Git exclusion rules
 ```
 

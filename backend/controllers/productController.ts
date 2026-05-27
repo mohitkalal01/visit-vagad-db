@@ -21,22 +21,7 @@ export const getAllProducts = async (searchParams: URLSearchParams) => {
   return await Product.find(query).sort({ createdAt: -1 });
 };
 
-export const getProductById = async (id: string) => {
-  await connectDB();
-  return await Product.findById(id);
-};
-
 export const createProduct = async (data: any) => {
   await connectDB();
   return await Product.create(data);
-};
-
-export const updateProduct = async (id: string, data: any) => {
-  await connectDB();
-  return await Product.findByIdAndUpdate(id, data, { new: true, runValidators: true });
-};
-
-export const deleteProduct = async (id: string) => {
-  await connectDB();
-  return await Product.findByIdAndDelete(id);
 };

@@ -24,24 +24,3 @@ export const getAdminTabData = async (tab: string) => {
   }
 };
 
-export const getAdminStats = async () => {
-  await connectDB();
-  
-  const [userCount, bookingCount, orderCount, productCount, stayCount] = await Promise.all([
-    User.countDocuments(),
-    Booking.countDocuments(),
-    Order.countDocuments(),
-    Product.countDocuments(),
-    Stay.countDocuments()
-  ]);
-
-  return {
-    counts: {
-      users: userCount,
-      bookings: bookingCount,
-      orders: orderCount,
-      products: productCount,
-      stays: stayCount
-    }
-  };
-};

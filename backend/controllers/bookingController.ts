@@ -28,7 +28,3 @@ export const createBooking = async (data: any) => {
   return await Booking.create(data);
 };
 
-export const updateBookingStatus = async (id: string, status: string) => {
-  await connectDB();
-  return await Booking.findByIdAndUpdate(id, { status }, { new: true });
-};

@@ -4,13 +4,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export const getAllItineraries = async (searchParams: URLSearchParams) => {
-  await connectDB();
-  const user_id = searchParams.get('user_id');
-  let query: any = {};
-  if (user_id) query.user_id = user_id;
-  return await Itinerary.find(query).sort({ createdAt: -1 });
-};
 
 export const generateItinerary = async (data: any) => {
   await connectDB();
