@@ -26,7 +26,7 @@ export default function SearchBar() {
     };
 
     return (
-        <div style={{
+        <div className="search-bar-container" style={{
             background: 'rgba(255,255,255,0.97)',
             borderRadius: '999px',
             padding: '0.5rem 0.5rem 0.5rem 0.5rem',
@@ -116,8 +116,28 @@ export default function SearchBar() {
             </button>
 
             <style>{`
-        @media (max-width: 640px) {
-          .search-bar-inner > div { border-right: none !important; border-bottom: 1px solid #e5e0d8; }
+        @media (max-width: 768px) {
+          .search-bar-container {
+            flex-direction: column !important;
+            border-radius: 1.25rem !important;
+            padding: 1.25rem !important;
+            gap: 0.75rem !important;
+            align-items: stretch !important;
+          }
+          .search-bar-container > div {
+            border-right: none !important;
+            border-bottom: 1px solid #e5e0d8 !important;
+            padding: 0.5rem 0 !important;
+            min-width: 100% !important;
+          }
+          .search-bar-container > div:nth-child(4) {
+            border-bottom: none !important;
+          }
+          .search-bar-container > button {
+            width: 100% !important;
+            justify-content: center !important;
+            margin-top: 0.5rem !important;
+          }
         }
       `}</style>
         </div>

@@ -98,7 +98,7 @@ function PlannerContent() {
                 <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.05rem', maxWidth: 500, margin: '0 auto' }}>Tell us your preferences — Gemini AI builds your perfect Vagad trip</p>
             </div>
 
-            <div className="container-custom" style={{ padding: '3rem 1.5rem', display: 'grid', gridTemplateColumns: '380px 1fr', gap: '2.5rem', alignItems: 'start' }}>
+            <div className="container-custom planner-grid" style={{ padding: '3rem 1.5rem', display: 'grid', gridTemplateColumns: '380px 1fr', gap: '2.5rem', alignItems: 'start' }}>
 
                 {/* === Form Panel === */}
                 <div style={{ position: 'sticky', top: '5rem', display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -283,7 +283,8 @@ function PlannerContent() {
 
             <style>{`
         @media (max-width: 900px) {
-          .container-custom > div { grid-template-columns: 1fr !important; }
+          .planner-grid { grid-template-columns: 1fr !important; }
+          .planner-grid > div:first-of-type { position: static !important; }
         }
       `}</style>
         </div>

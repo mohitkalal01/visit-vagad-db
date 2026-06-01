@@ -74,7 +74,7 @@ export default function ProfilePage() {
         <div style={{ background: 'var(--bg)', minHeight: '100vh', padding: '3rem 1.5rem' }}>
             <div className="container-custom">
                 {/* Header Section */}
-                <div style={{ background: 'white', borderRadius: '1.5rem', padding: '2.5rem', border: '1px solid var(--border)', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="profile-header" style={{ background: 'white', borderRadius: '1.5rem', padding: '2.5rem', border: '1px solid var(--border)', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), var(--accent))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2rem', fontWeight: 800, fontFamily: 'Outfit, sans-serif' }}>
                             {user.name[0]}
@@ -90,7 +90,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Tabs */}
-                <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>
+                <div className="profile-tabs" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem', overflowX: 'auto', whiteSpace: 'nowrap' }}>
                     <button 
                         onClick={() => setActiveTab('bookings')}
                         style={{ background: 'none', border: 'none', padding: '0.75rem 1rem', fontSize: '1rem', fontWeight: 700, fontFamily: 'Outfit, sans-serif', color: activeTab === 'bookings' ? 'var(--primary)' : 'var(--text-muted)', borderBottom: activeTab === 'bookings' ? '3px solid var(--primary)' : '3px solid transparent', cursor: 'pointer' }}
@@ -124,7 +124,7 @@ export default function ProfilePage() {
                                     </div>
                                 ) : (
                                     bookings.map(b => (
-                                        <div key={b._id} style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div key={b._id} className="profile-list-item" style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div>
                                                 <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '0.4rem' }}>{b.stay_name}</h3>
                                                 <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                                     </div>
                                 ) : (
                                     orders.map(o => (
-                                        <div key={o._id} style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div key={o._id} className="profile-list-item" style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div>
                                                 <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '0.4rem' }}>{o.product_name}</h3>
                                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>by {o.artisan_name}</p>
@@ -179,7 +179,7 @@ export default function ProfilePage() {
                                     </div>
                                 ) : (
                                     itineraries.map(it => (
-                                        <div key={it._id} style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div key={it._id} className="profile-list-item" style={{ background: 'white', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div>
                                                 <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '0.4rem' }}>{it.title}</h3>
                                                 <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -199,6 +199,41 @@ export default function ProfilePage() {
                     </div>
                 )}
             </div>
+            <style>{`
+              @media (max-width: 768px) {
+                .profile-header {
+                  flex-direction: column !important;
+                  align-items: stretch !important;
+                  gap: 1.5rem !important;
+                  padding: 1.5rem !important;
+                  text-align: center !important;
+                }
+                .profile-header > div {
+                  flex-direction: column !important;
+                  text-align: center !important;
+                  gap: 1rem !important;
+                }
+                .profile-header button {
+                  width: 100% !important;
+                }
+                .profile-list-item {
+                  flex-direction: column !important;
+                  align-items: stretch !important;
+                  gap: 1rem !important;
+                  text-align: left !important;
+                }
+                .profile-list-item > div:last-of-type {
+                  text-align: left !important;
+                  display: flex !important;
+                  justify-content: space-between !important;
+                  align-items: center !important;
+                }
+                .profile-tabs button {
+                  padding: 0.5rem 0.5rem !important;
+                  font-size: 0.9rem !important;
+                }
+              }
+            `}</style>
         </div>
     );
 }

@@ -168,7 +168,7 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="container-custom" style={{ padding: '3rem 1.5rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }}>
+                <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }}>
 
                     {/* Image Gallery */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -252,7 +252,7 @@ export default function ProductDetailPage() {
             
             {/* Reviews Section */}
             <div className="container-custom" style={{ padding: '4rem 1.5rem', borderTop: '1px solid var(--border)', marginTop: '4rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
+                <div className="product-reviews-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
                     {/* Reviews List */}
                     <div>
                         <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.8rem', color: 'var(--primary)', marginBottom: '2rem' }}>Artisan Product Reviews ({reviews.length})</h2>
@@ -322,7 +322,20 @@ export default function ProductDetailPage() {
 
             <style>{`
         @media (max-width: 768px) {
-          .product-grid { grid-template-columns: 1fr !important; }
+          .product-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+          .product-reviews-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+          .product-reviews-grid > div:last-child {
+            position: static !important;
+          }
+          .product-grid > div:first-child > div:first-child {
+            height: 280px !important;
+          }
         }
       `}</style>
         </div>

@@ -51,9 +51,9 @@ export default function Home() {
         overflow: 'hidden',
       }}>
         {/* Floating decorative dots */}
-        <div style={{ position: 'absolute', top: '15%', right: '8%', width: 180, height: 180, borderRadius: '50%', border: '1px solid rgba(224,112,80,0.2)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: '10%', right: '5%', width: 300, height: 300, borderRadius: '50%', border: '1px solid rgba(224,112,80,0.1)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '10%', left: '3%', width: 200, height: 200, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.08)', pointerEvents: 'none' }} />
+        <div className="hero-circle-1" style={{ position: 'absolute', top: '15%', right: '8%', width: 180, height: 180, borderRadius: '50%', border: '1px solid rgba(224,112,80,0.2)', pointerEvents: 'none' }} />
+        <div className="hero-circle-2" style={{ position: 'absolute', top: '10%', right: '5%', width: 300, height: 300, borderRadius: '50%', border: '1px solid rgba(224,112,80,0.1)', pointerEvents: 'none' }} />
+        <div className="hero-circle-3" style={{ position: 'absolute', bottom: '10%', left: '3%', width: 200, height: 200, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.08)', pointerEvents: 'none' }} />
 
         <div className="container-custom" style={{ zIndex: 1 }}>
           {/* Pre-title */}
@@ -72,7 +72,7 @@ export default function Home() {
           </p>
 
           {/* Stats */}
-          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+          <div className="hero-stats" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
             {[['50+', 'Rural Homestays'], ['200+', 'Verified Artisans'], ['15+', 'Destinations'], ['4.8★', 'Avg. Rating']].map(([num, label]) => (
               <div key={label}>
                 <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.6rem', color: '#e07050' }}>{num}</div>
@@ -85,7 +85,7 @@ export default function Home() {
           <SearchBar />
 
           {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.75rem' }}>
+          <div className="hero-ctas" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.75rem' }}>
             <Link href="/planner" className="btn-accent">✨ Plan with AI</Link>
             <Link href="/destinations" className="btn-outline" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)' }}>Explore Destinations →</Link>
           </div>
@@ -240,6 +240,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-circle-1, .hero-circle-2, .hero-circle-3 {
+            display: none !important;
+          }
+          .hero-stats {
+            gap: 1.25rem !important;
+            justify-content: space-between !important;
+          }
+          .hero-ctas {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .hero-ctas > a {
+            text-align: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

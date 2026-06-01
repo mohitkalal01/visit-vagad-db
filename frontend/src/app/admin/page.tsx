@@ -42,9 +42,9 @@ export default function AdminDashboard() {
     if (authLoading || !user || user.role !== 'admin') return <div style={{ padding: '5rem', textAlign: 'center' }}>Verifying Admin Access...</div>;
 
     return (
-        <div style={{ background: '#f8fafc', minHeight: '100vh', display: 'flex' }}>
+        <div className="admin-container" style={{ background: '#f8fafc', minHeight: '100vh', display: 'flex' }}>
             {/* Sidebar */}
-            <div style={{ width: 280, background: 'var(--primary)', color: 'white', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div className="admin-sidebar" style={{ width: 280, background: 'var(--primary)', color: 'white', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                 <div>
                     <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.5rem', marginBottom: '0.5rem' }}>Visit Vagad</h1>
                     <p style={{ fontSize: '0.85rem', opacity: 0.7 }}>Control Center</p>
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Main Content */}
-            <div style={{ flex: 1, padding: '3rem' }}>
+            <div className="admin-content" style={{ flex: 1, padding: '3rem' }}>
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
                     <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.8rem', color: 'var(--primary)' }}>
                         {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
                 {loading ? (
                     <div style={{ padding: '5rem', textAlign: 'center', color: 'var(--text-muted)' }}>Loading records...</div>
                 ) : (
-                    <div style={{ background: 'white', borderRadius: '1.5rem', border: '1px solid var(--border)', overflow: 'hidden' }}>
+                    <div className="admin-table-wrapper" style={{ background: 'white', borderRadius: '1.5rem', border: '1px solid var(--border)', overflow: 'hidden' }}>
                         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                             <thead style={{ background: '#f1f5f9', borderBottom: '1px solid var(--border)' }}>
                                 <tr>
@@ -135,6 +135,62 @@ export default function AdminDashboard() {
                     </div>
                 )}
             </div>
+            <style>{`
+        @media (max-width: 900px) {
+          .admin-container {
+            flex-direction: column !important;
+          }
+          .admin-sidebar {
+            width: 100% !important;
+            padding: 1.5rem !important;
+            gap: 1.25rem !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+          }
+          .admin-sidebar > div {
+            margin-bottom: 0 !important;
+          }
+          .admin-sidebar nav {
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            padding-bottom: 0.25rem !important;
+            width: auto !important;
+            flex: 1 !important;
+            justify-content: flex-end !important;
+            gap: 0.5rem !important;
+          }
+          .admin-sidebar nav button {
+            white-space: nowrap !important;
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.85rem !important;
+          }
+          .admin-content {
+            padding: 1.5rem !important;
+          }
+          .admin-content header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 1rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .admin-sidebar {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .admin-sidebar nav {
+            justify-content: flex-start !important;
+            width: 100% !important;
+          }
+        }
+        .admin-table-wrapper {
+          overflow-x: auto !important;
+        }
+        .admin-table-wrapper table {
+          min-width: 600px;
+        }
+      `}</style>
         </div>
     );
 }

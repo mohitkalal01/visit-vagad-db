@@ -184,7 +184,7 @@ export default function StayDetailPage() {
       )}
 
       <div className="container-custom" style={{ padding: '3rem 1.5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '3rem', alignItems: 'start' }}>
+        <div className="stay-detail-grid" style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '3rem', alignItems: 'start' }}>
           <div>
             <div style={{ borderRadius: '1.25rem', overflow: 'hidden', height: 420, marginBottom: '1rem' }}>
               <img src={images[activeImg]} alt={stay.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -289,7 +289,7 @@ export default function StayDetailPage() {
       
       {/* Reviews Section */}
       <div className="container-custom" style={{ padding: '4rem 1.5rem', borderTop: '1px solid var(--border)', marginTop: '4rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
+        <div className="stay-reviews-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
             {/* Reviews List */}
             <div>
                 <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.8rem', color: 'var(--primary)', marginBottom: '2rem' }}>Guest Reviews ({reviews.length})</h2>
@@ -356,6 +356,27 @@ export default function StayDetailPage() {
             </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .stay-detail-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+          .stay-detail-grid > div:last-child {
+            position: static !important;
+          }
+          .stay-reviews-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+          .stay-reviews-grid > div:last-child {
+            position: static !important;
+          }
+          .stay-detail-grid > div:first-child > div:first-child {
+            height: 280px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
